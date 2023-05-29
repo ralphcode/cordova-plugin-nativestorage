@@ -6,6 +6,9 @@
 @property NSString* suiteName;
 @end
 
+// NOTE: https://developer.apple.com/documentation/foundation/nsuserdefaults/1414005-synchronize?language=objc
+// synchronize: ...; this method is unnecessary and shouldn't be used.
+
 @implementation NativeStorage
 
 - (void) initWithSuiteName: (CDVInvokedUrlCommand*) command
@@ -18,7 +21,6 @@
         {
             _suiteName = aSuiteName;
             _appGroupUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:_suiteName];
-	    pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK];
         }
         else
         {
@@ -46,7 +48,7 @@
 		{
 			NSUserDefaults *defaults = [self getUserDefault];
 			[defaults removeObjectForKey: reference];
-			BOOL success = [defaults synchronize];
+			BOOL success = true; //[defaults synchronize];
 			if(success) pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK];
 			else pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsString:@"Remove has failed"];
 		}
@@ -63,7 +65,7 @@
 	[self.commandDelegate runInBackground:^{
 		CDVPluginResult* pluginResult = nil;
 		[[self getUserDefault] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
-		BOOL success = [[self getUserDefault] synchronize];
+		BOOL success = true; //[[self getUserDefault] synchronize];
 		if(success) pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK];
 		else pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsString:@"Clear has failed"];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId: command.callbackId];
@@ -81,7 +83,7 @@
 		{
 			NSUserDefaults *defaults = [self getUserDefault];
 			[defaults setBool: aBoolean forKey:reference];
-			BOOL success = [defaults synchronize];
+			BOOL success = true; //[defaults synchronize];
 			if(success) pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsBool:aBoolean];
 			else pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsString:@"Write has failed"];
 		}
@@ -122,7 +124,7 @@
 		{
 			NSUserDefaults *defaults = [self getUserDefault];
 			[defaults setInteger: anInt forKey:reference];
-			BOOL success = [defaults synchronize];
+			BOOL success = true; //[defaults synchronize];
 			if(success) pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsNSInteger:anInt];
 			else pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsString:@"Write has failed"];
 		}
@@ -164,7 +166,7 @@
 		{
 			NSUserDefaults *defaults = [self getUserDefault];
 			[defaults setDouble: aDouble forKey:reference];
-			BOOL success = [defaults synchronize];
+			BOOL success = true; //[defaults synchronize];
 			if(success) pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsDouble:aDouble];
 			else pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsString:@"Write has failed"];
 		}
@@ -205,7 +207,7 @@
 		{
 			NSUserDefaults *defaults = [self getUserDefault];
 			[defaults setObject: aString forKey:reference];
-			BOOL success = [defaults synchronize];
+			BOOL success = true; //[defaults synchronize];
 			if(success) pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString:aString];
 			else pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsString:@"Write has failed"];
 
@@ -252,7 +254,7 @@
 		{
 			NSUserDefaults *defaults = [self getUserDefault];
 			[defaults setObject: aString forKey:reference];
-			BOOL success = [defaults synchronize];
+			BOOL success = true; //[defaults synchronize];
 			if(success) pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString:aString];
 			else pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsInt:1]; //Write has failed
 		}
