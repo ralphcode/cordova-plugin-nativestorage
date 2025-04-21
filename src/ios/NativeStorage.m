@@ -21,6 +21,7 @@
         {
             _suiteName = aSuiteName;
             _appGroupUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:_suiteName];
+	    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Successfully initialized suiteName."];
         }
         else
         {
